@@ -25,6 +25,10 @@ body {
 }
 
 @import './style/variables.scss';
+@import './style/themes.scss';
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap.scss';
+
+/* Re-points Bootstrap's baked-in palette at the active theme. Must come after bootstrap. */
+@import './style/bootstrap-theme.scss';

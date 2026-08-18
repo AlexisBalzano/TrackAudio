@@ -1,0 +1,259 @@
+@import 'variables';
+
+/*
+ * Bootstrap theme bridge.
+ *
+ * Bootstrap bakes the palette literals into its own --bs-* custom properties
+ * at compile time, because its colour maths (to-rgb, color-contrast,
+ * shade-color) cannot run on a var(). That leaves every Bootstrap-rendered
+ * surface — body, buttons, cards, inputs, modals — pinned to the default
+ * theme.
+ *
+ * This file re-points those properties at the $ta-* palette. Because the
+ * values are var() references rather than literals, one declaration covers
+ * every theme: changing data-theme changes --ta-*, and these follow.
+ *
+ * It must be imported AFTER bootstrap in index.scss. The selectors match
+ * Bootstrap's own, so they win on source order rather than specificity.
+ * When adding a Bootstrap component to the UI, check whether it bakes a
+ * palette colour and add it here if so.
+ */
+
+:root {
+  --bs-body-bg: #{$ta-bg};
+  --bs-body-color: #{$ta-body-color};
+  --bs-primary: #{$ta-primary};
+  --bs-dark: #{$ta-dark};
+  --bs-link-color: #{$ta-primary};
+  --bs-link-hover-color: #{shade($ta-primary, 10%)};
+  --bs-highlight-color: #{$ta-body-color};
+  --bs-emphasis-color: #{$ta-body-color};
+  --bs-border-color: #{shade($ta-dark, -2%)};
+}
+
+/*
+ * Colour utilities (.bg-dark, .text-info, .border-primary …).
+ *
+ * These resolve through Bootstrap's --bs-*-rgb triplets, which are baked from
+ * the literals by to-rgb() and cannot be re-pointed at a var() — CSS has no
+ * way to split a colour back into channels. Overriding the utilities directly
+ * avoids maintaining a parallel set of rgb triplets per theme.
+ *
+ * color-mix against the matching --bs-*-opacity keeps the .bg-opacity-* and
+ * .text-opacity-* modifiers working as Bootstrap intends.
+ */
+$ta-utility-colours: (
+  'primary': $ta-primary,
+  'secondary': $ta-secondary,
+  'success': $ta-success,
+  'info': $ta-info,
+  'warning': $ta-warning,
+  'danger': $ta-danger,
+  'light': $ta-light,
+  'dark': $ta-dark
+);
+
+@each $name, $colour in $ta-utility-colours {
+  .bg-#{$name} {
+    background-color: color-mix(
+      in srgb,
+      #{$colour} calc(var(--bs-bg-opacity, 1) * 100%),
+      transparent
+    ) !important;
+  }
+
+  .text-#{$name} {
+    color: color-mix(
+      in srgb,
+      #{$colour} calc(var(--bs-text-opacity, 1) * 100%),
+      transparent
+    ) !important;
+  }
+
+  .border-#{$name} {
+    border-color: color-mix(
+      in srgb,
+      #{$colour} calc(var(--bs-border-opacity, 1) * 100%),
+      transparent
+    ) !important;
+  }
+}
+
+.bg-body,
+.bg-body-secondary,
+.bg-body-tertiary {
+  background-color: #{$ta-bg} !important;
+}
+
+.text-body,
+.text-body-secondary,
+.text-body-emphasis {
+  color: #{$ta-body-color} !important;
+}
+
+.card {
+  --bs-card-bg: #{$ta-dark};
+}
+
+.dropdown-menu {
+  --bs-dropdown-bg: #{$ta-dark};
+  --bs-dropdown-color: #{$ta-body-color};
+  --bs-dropdown-link-color: #{$ta-body-color};
+  --bs-dropdown-link-active-bg: #{$ta-primary};
+  --bs-dropdown-link-hover-bg: #{$ta-primary};
+}
+
+.dropdown-menu-dark {
+  --bs-dropdown-link-active-bg: #{$ta-primary};
+}
+
+.accordion {
+  --bs-accordion-bg: #{shade($ta-dark, 3%)};
+  --bs-accordion-color: #{$ta-body-color};
+  --bs-accordion-btn-bg: #{$ta-dark};
+  --bs-accordion-btn-color: #{$ta-body-color};
+  --bs-accordion-active-bg: #{$ta-dark};
+  --bs-accordion-active-color: #{$ta-body-color};
+}
+
+.modal {
+  --bs-modal-bg: #{$ta-bg};
+  --bs-modal-color: #{$ta-body-color};
+  --bs-modal-footer-bg: #{$ta-dark};
+  --bs-modal-footer-border-color: #{$ta-dark};
+  --bs-modal-header-border-color: #{$ta-dark};
+}
+
+.list-group {
+  --bs-list-group-bg: #{$ta-bg};
+  --bs-list-group-color: #{$ta-body-color};
+  --bs-list-group-disabled-bg: #{$ta-bg};
+  --bs-list-group-active-bg: #{$ta-primary};
+  --bs-list-group-active-border-color: #{$ta-primary};
+  --bs-list-group-border-color: #{shade($ta-dark, -2%)};
+}
+
+.list-group-item,
+.list-group-item:hover,
+.list-group-item:focus {
+  background-color: #{$ta-bg};
+}
+
+.nav-pills {
+  --bs-nav-pills-link-active-bg: #{$ta-primary};
+}
+
+.pagination {
+  --bs-pagination-active-bg: #{$ta-primary};
+  --bs-pagination-active-border-color: #{$ta-primary};
+}
+
+.progress,
+.progress-stacked {
+  --bs-progress-bar-bg: #{$ta-primary};
+  --bs-progress-bg: #{$ta-dark};
+}
+
+.table,
+.table-dark {
+  --bs-table-bg: #{$ta-dark};
+  --bs-table-color: #{$ta-body-color};
+}
+
+/* Buttons: Bootstrap writes one --bs-btn-* set per variant. */
+.btn-primary {
+  --bs-btn-bg: #{$ta-primary};
+  --bs-btn-border-color: #{$ta-primary};
+  --bs-btn-hover-bg: #{shade($ta-primary, -10%)};
+  --bs-btn-hover-border-color: #{shade($ta-primary, -10%)};
+  --bs-btn-active-bg: #{shade($ta-primary, -15%)};
+  --bs-btn-active-border-color: #{shade($ta-primary, -15%)};
+  --bs-btn-disabled-bg: #{$ta-primary};
+  --bs-btn-disabled-border-color: #{$ta-primary};
+}
+
+.btn-dark {
+  --bs-btn-bg: #{$ta-dark};
+  --bs-btn-border-color: #{$ta-dark};
+  --bs-btn-hover-bg: #{shade($ta-dark, 10%)};
+  --bs-btn-hover-border-color: #{shade($ta-dark, 10%)};
+  --bs-btn-active-bg: #{shade($ta-dark, 15%)};
+  --bs-btn-active-border-color: #{shade($ta-dark, 15%)};
+  --bs-btn-disabled-bg: #{$ta-dark};
+  --bs-btn-disabled-border-color: #{$ta-dark};
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #{$ta-primary};
+  --bs-btn-border-color: #{$ta-primary};
+  --bs-btn-hover-bg: #{$ta-primary};
+  --bs-btn-hover-border-color: #{$ta-primary};
+  --bs-btn-active-bg: #{$ta-primary};
+  --bs-btn-active-border-color: #{$ta-primary};
+  --bs-btn-disabled-color: #{$ta-primary};
+  --bs-btn-disabled-border-color: #{$ta-primary};
+}
+
+.btn-outline-dark {
+  --bs-btn-color: #{$ta-dark};
+  --bs-btn-border-color: #{$ta-dark};
+  --bs-btn-hover-bg: #{$ta-dark};
+  --bs-btn-hover-border-color: #{$ta-dark};
+  --bs-btn-active-bg: #{$ta-dark};
+  --bs-btn-active-border-color: #{$ta-dark};
+  --bs-btn-disabled-color: #{$ta-dark};
+  --bs-btn-disabled-border-color: #{$ta-dark};
+}
+
+/* Form controls set their colours directly rather than through --bs-*. */
+.form-control,
+.form-select,
+.form-control:focus {
+  background-color: #{$ta-dark};
+  color: #{$ta-body-color};
+}
+
+.form-control::file-selector-button {
+  color: #{$ta-body-color};
+}
+
+.form-floating > textarea:not(:placeholder-shown) ~ label::after {
+  background-color: #{$ta-dark};
+}
+
+/* Range inputs (microphone gain, loopback volume) colour the thumb directly. */
+.form-range::-webkit-slider-thumb,
+.form-range::-moz-range-thumb {
+  background-color: #{$ta-primary};
+}
+
+.form-range::-webkit-slider-runnable-track,
+.form-range::-moz-range-track {
+  background-color: #{shade($ta-dark, 10%)};
+}
+
+.form-range:focus::-webkit-slider-thumb,
+.form-range:focus::-moz-range-thumb {
+  box-shadow:
+    0 0 0 1px #{$ta-bg},
+    0 0 0 0.25rem #{'color-mix(in srgb, var(--ta-primary) 25%, transparent)'};
+}
+
+.form-select:-moz-focusring {
+  text-shadow: 0 0 0 #{$ta-body-color};
+}
+
+.input-group-text {
+  background-color: #{$ta-dark};
+  color: #{$ta-body-color};
+}
+
+.form-check-input {
+  --bs-form-check-bg: #{$ta-dark};
+}
+
+.form-check-input:checked,
+.form-check-input[type='checkbox']:indeterminate {
+  background-color: #{$ta-primary};
+  border-color: #{$ta-primary};
+}

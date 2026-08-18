@@ -7,13 +7,13 @@
 .checking-for-update-text {
   font-weight: 400;
   font-size: 11px;
-  color: #5c5f75;
+  color: Bootstrap.shade(Bootstrap.$ta-body-color, -40%);
   min-width: 152px;
 }
 
 .refresh-icon {
   -webkit-app-region: no-drag;
-  color: #a4a9b0;
+  color: Bootstrap.shade(Bootstrap.$ta-body-color, -20%);
   font-size: 11px;
 }
 
@@ -36,20 +36,20 @@
 }
 
 .list-group-item {
-  background-color: #2c2f45;
+  background-color: Bootstrap.$ta-bg;
   padding-bottom: 8px;
   min-height: 82px;
-  color: Bootstrap.$body-color !important;
+  color: Bootstrap.$ta-body-color !important;
 }
 
 .list-group-item:hover {
-  background-color: #2c2f45;
-  color: Bootstrap.$body-color !important;
+  background-color: Bootstrap.$ta-bg;
+  color: Bootstrap.$ta-body-color !important;
 }
 
 .list-group-item:focus {
-  background-color: #2c2f45;
-  color: Bootstrap.$body-color !important;
+  background-color: Bootstrap.$ta-bg;
+  color: Bootstrap.$ta-body-color !important;
 }
 
 .version-text {
@@ -68,12 +68,12 @@
 
 .custom-btn:hover.btn-success {
   color: white;
-  background-color: #2ebf4f;
+  background-color: Bootstrap.shade(Bootstrap.$ta-success, 5%);
 }
 
 .custom-btn:hover.btn-danger {
   color: white;
-  background-color: #df4958;
+  background-color: Bootstrap.shade(Bootstrap.$ta-danger, 5%);
 }
 
 .package-row-loading {
@@ -84,17 +84,17 @@
 }
 
 .list-group-item {
-  background-color: #2c2f45;
+  background-color: Bootstrap.$ta-bg;
   padding-bottom: 8px;
   /* min-height: 82px; */
 }
 
 .list-group-item:hover {
-  background-color: #0d6efd !important;
+  background-color: Bootstrap.$ta-primary !important;
 }
 
 .list-group-item:focus {
-  background-color: #0d6efd !important;
+  background-color: Bootstrap.$ta-primary !important;
 }
 
 .name-text {
@@ -125,7 +125,7 @@
   }
 
   .status-text {
-    color: #8b8fa3;
+    color: Bootstrap.shade(Bootstrap.$ta-body-color, -30%);
   }
 
   .progress {
@@ -135,7 +135,7 @@
     margin: 0.5rem 0;
 
     .progress-bar {
-      background: #0d6efd;
+      background: Bootstrap.$ta-primary;
       transition: width 0.2s ease;
 
       &.progress-bar-striped {

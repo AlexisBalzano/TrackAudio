@@ -1,5 +1,18 @@
 @use 'sass:color';
+@use 'sass:math';
+@use 'sass:string';
 
+/*
+ * Palette literals.
+ *
+ * These feed Bootstrap, which runs compile-time colour maths — to-rgb(),
+ * color-contrast(), shade-color() — that CSS custom properties cannot
+ * satisfy, so they have to stay real colour values. They must match the
+ * :root block in themes.scss, which is the default theme.
+ *
+ * TrackAudio's own styles should use the $ta-* aliases below instead, so a
+ * theme change restyles them at runtime.
+ */
 $primary: #436384;
 $secondary: #6c757d;
 $success: #28a745;
@@ -11,8 +24,59 @@ $dark: #212431;
 $bg-color: #2c2f45;
 $disabled: color.adjust($dark, $lightness: -3%);
 $secondary-bg: #2c2f45;
-$dark-border: var(--navbar-color, color.adjust($dark, $lightness: -10%));
-$navbar: var(--navbar-color, $dark);
+
+/*
+ * Runtime-themeable aliases. Each resolves to a custom property defined per
+ * theme in themes.scss.
+ */
+$ta-primary: var(--ta-primary);
+$ta-secondary: var(--ta-secondary);
+$ta-success: var(--ta-success);
+$ta-info: var(--ta-info);
+$ta-warning: var(--ta-warning);
+$ta-danger: var(--ta-danger);
+$ta-light: var(--ta-light);
+$ta-dark: var(--ta-dark);
+$ta-bg: var(--ta-bg);
+$ta-body-color: var(--ta-body-color);
+$ta-alias: var(--ta-alias);
+$ta-btn-text: var(--ta-btn-text);
+
+/*
+ * Runtime equivalent of color.adjust($colour, $lightness: $delta), for use on
+ * the $ta-* aliases — Sass cannot do colour maths on a var().
+ *
+ * Relative colour syntax keeps the HSL semantics color.adjust() had, so the
+ * default theme renders identically to the previous compile-time output.
+ * color-mix() toward white/black would not: it shifts saturation as well.
+ */
+@function shade($colour, $delta) {
+  // In relative colour syntax the l channel resolves to a number in 0..100,
+  // not a percentage, so the delta has to be unitless: calc(l - 3%) is a type
+  // error and silently computes to transparent.
+  $amount: math.div($delta, 1%);
+
+  @if $amount == 0 {
+    @return $colour;
+  } @else if $amount > 0 {
+    @return string.unquote('hsl(from #{$colour} h s calc(l + #{$amount}))');
+  } @else {
+    @return string.unquote('hsl(from #{$colour} h s calc(l - #{math.abs($amount)}))');
+  }
+}
+
+/*
+ * Runtime equivalent of rgba($colour, $alpha) for the $ta-* aliases. Sass
+ * cannot attach an alpha channel to a var(), and CSS rgba() takes numeric
+ * channels rather than a colour, so mix toward transparent instead.
+ */
+@function alpha($colour, $amount) {
+  @return string.unquote('color-mix(in srgb, #{$colour} #{$amount * 100%}, transparent)');
+}
+
+$ta-disabled: shade($ta-dark, -3%);
+$dark-border: shade($ta-dark, -10%);
+$navbar: $ta-dark;
 $theme-colors: (
   'primary': $primary,
   'secondary': $secondary,
@@ -23,7 +87,7 @@ $theme-colors: (
   'light': $light,
   'dark': $dark
 );
-$alias: var(--alias-color, #5eb1bf);
+$alias: $ta-alias;
 
 $disabled: color.adjust($dark, $lightness: -3%);
 

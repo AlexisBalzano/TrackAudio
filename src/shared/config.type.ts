@@ -1,5 +1,6 @@
 export type AlwaysOnTopMode = 'never' | 'always' | 'inMiniMode';
 export type RadioEffects = 'on' | 'input' | 'output' | 'off';
+export type StyleTheme = 'default' | 'dark';
 
 export interface Configuration {
   version?: number;
@@ -22,6 +23,8 @@ export interface Configuration {
 
   showExpandedRx: boolean;
   transparentMiniMode: boolean;
+
+  styleTheme: StyleTheme;
 
   radioToMaxVolumeOnTx: boolean;
 

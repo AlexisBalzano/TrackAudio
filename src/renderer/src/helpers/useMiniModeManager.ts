@@ -81,7 +81,7 @@ const useMiniModeManager = () => {
 
       // Set background transparency
       document.body.style.backgroundColor =
-        miniMode && transparentMiniMode ? 'transparent' : '#2c2f45';
+        miniMode && transparentMiniMode ? 'transparent' : 'var(--ta-bg)';
     },
     [platform, transparentMiniMode]
   );

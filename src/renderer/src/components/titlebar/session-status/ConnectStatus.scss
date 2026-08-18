@@ -1,7 +1,7 @@
 @use '../../../style/variables.scss' as GlobalVars;
 
 .connect-status {
-  // background-color: darken($dark, 5%) !important;
+  // background-color: darken($ta-dark, 5%) !important;
   font-family: GlobalVars.$font-medium;
   // height: calc($navbar-height - 2px) !important;
 }
@@ -11,8 +11,8 @@
   padding: 1px 2px;
   margin: 2px 0px;
   font-size: 7px;
-  color: GlobalVars.$body-color;
-  background-color: rgb(129, 129, 129);
+  color: GlobalVars.$ta-body-color;
+  background-color: GlobalVars.$ta-secondary;
   border-radius: 3px;
   display: flex;
   justify-content: center;
@@ -24,35 +24,35 @@
 }
 
 .freq-status.active {
-  color: GlobalVars.$body-color;
-  background-color: rgb(249, 112, 0);
+  color: GlobalVars.$ta-body-color;
+  background-color: GlobalVars.$ta-warning;
 }
 
 .connected {
-  background-color: rgba(GlobalVars.$success, 0.6) !important;
+  background-color: GlobalVars.alpha(GlobalVars.$ta-success, 0.6) !important;
   color: white !important;
-  border-color: GlobalVars.$success !important;
+  border-color: GlobalVars.$ta-success !important;
   cursor: pointer;
 }
 
 .rxOnly {
-  background-color: rgba(GlobalVars.$info, 0.6) !important;
+  background-color: GlobalVars.alpha(GlobalVars.$ta-info, 0.6) !important;
   color: white !important;
-  border-color: GlobalVars.$info !important;
+  border-color: GlobalVars.$ta-info !important;
   cursor: pointer;
 }
 
 .txOnly {
-  background-color: rgba(GlobalVars.$warning, 0.6) !important;
+  background-color: GlobalVars.alpha(GlobalVars.$ta-warning, 0.6) !important;
   color: white !important;
-  border-color: GlobalVars.$warning !important;
+  border-color: GlobalVars.$ta-warning !important;
   cursor: pointer;
 }
 
 .disconnected {
-  background-color: rgba(GlobalVars.$success, 0.6) !important;
+  background-color: GlobalVars.alpha(GlobalVars.$ta-success, 0.6) !important;
   color: white !important;
-  border-color: GlobalVars.$success !important;
+  border-color: GlobalVars.$ta-success !important;
   cursor: pointer;
 }
 

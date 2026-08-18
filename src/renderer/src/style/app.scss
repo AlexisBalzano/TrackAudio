@@ -3,7 +3,7 @@
 
 .form-control::-webkit-scrollbar-track {
   padding: 0px 0;
-  background-color: $dark;
+  background-color: $ta-dark;
 }
 
 .form-control::-webkit-scrollbar {
@@ -11,7 +11,7 @@
 }
 
 .form-control::-webkit-scrollbar-thumb {
-  background-color: $body-color;
+  background-color: $ta-body-color;
 }
 
 /* stylelint-disable scss/empty-rules */
@@ -51,9 +51,9 @@ button:focus:not(:focus-visible) {
   height: 100%;
   margin: 0px;
   font-size: $main-font-size;
-  background-color: color.adjust($dark, $lightness: 10%);
-  color: $body-color;
-  border: 2px solid color.adjust($dark, $lightness: -5%);
+  background-color: shade($ta-dark, 10%);
+  color: $ta-body-color;
+  border: 2px solid shade($ta-dark, -5%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,27 +61,27 @@ button:focus:not(:focus-visible) {
 }
 
 .unfocused-color {
-  color: color.adjust($body-color, $lightness: -10%) !important;
+  color: shade($ta-body-color, -10%) !important;
 }
 
 .toolbar-btn-info {
-  background-color: color.adjust($info, $lightness: -10%) !important;
+  background-color: shade($ta-info, -10%) !important;
 }
 
 .toolbar-btn-active {
-  background-color: color.adjust($success, $lightness: -10%) !important;
+  background-color: shade($ta-success, -10%) !important;
 }
 
 .toolbar-btn.hover-enabled:hover {
-  background-color: color.adjust($dark, $lightness: 15%);
+  background-color: shade($ta-dark, 15%);
 }
 
 .toolbar-btn.dark {
-  background-color: color.adjust($dark, $lightness: -5%);
+  background-color: shade($ta-dark, -5%);
 }
 
 .toolbar-btn.dark:hover {
-  background-color: color.adjust($dark, $lightness: 0%);
+  background-color: shade($ta-dark, 0%);
 }
 
 .toolbar-btn:last-child {
@@ -108,14 +108,14 @@ button:focus:not(:focus-visible) {
 }
 
 .toolbar-dropdown-menu {
-  background-color: color.adjust($dark, $lightness: -5%);
+  background-color: shade($ta-dark, -5%);
   max-height: 150px;
   overflow-y: scroll;
 }
 
 .toolbar-dropdown-menu::-webkit-scrollbar-track {
   padding: 0px 0;
-  background-color: color.adjust($dark, $lightness: -5%);
+  background-color: shade($ta-dark, -5%);
 }
 
 .toolbar-dropdown-menu::-webkit-scrollbar {
@@ -123,7 +123,7 @@ button:focus:not(:focus-visible) {
 }
 
 .toolbar-dropdown-menu::-webkit-scrollbar-thumb {
-  background-color: $body-color;
+  background-color: $ta-body-color;
 }
 
 .toolbar-dropdown-item {
@@ -136,7 +136,7 @@ button:focus:not(:focus-visible) {
 }
 
 .toolbar-dropdown-item:hover {
-  background-color: color.adjust($dark, $lightness: -5%);
+  background-color: shade($ta-dark, -5%);
 }
 
 $global-select-height: 30px;
@@ -148,12 +148,12 @@ $global-select-height: 30px;
 @mixin setBgColorAndHover($baseColor) {
   background-color: $baseColor;
   &:hover {
-    background-color: color.adjust($baseColor, $lightness: 5%);
+    background-color: shade($baseColor, 5%);
   }
 }
 
 button {
-  color: $btn-text-color;
+  color: $ta-btn-text;
   min-height: 25px;
   // line-height: 10px;
 }
@@ -166,65 +166,65 @@ button {
 }
 
 button:hover {
-  color: $btn-text-color;
+  color: $ta-btn-text;
 }
 
 .btn-success,
 .btn-success:focus {
-  color: $btn-text-color !important;
-  @include setBgColorAndHover($success);
-  border-color: color.adjust($success, $lightness: -15%);
-  outline: color.adjust($success, $lightness: -15%) solid 2px;
+  color: $ta-btn-text !important;
+  @include setBgColorAndHover($ta-success);
+  border-color: shade($ta-success, -15%);
+  outline: shade($ta-success, -15%) solid 2px;
 }
 
 .btn-info,
 .btn-info:focus {
-  color: $btn-text-color !important;
-  @include setBgColorAndHover($info);
-  border-color: color.adjust($info, $lightness: -15%);
-  outline: color.adjust($info, $lightness: -15%) solid 2px;
+  color: $ta-btn-text !important;
+  @include setBgColorAndHover($ta-info);
+  border-color: shade($ta-info, -15%);
+  outline: shade($ta-info, -15%) solid 2px;
 }
 
 .btn-danger,
 .btn-danger:focus {
-  color: $btn-text-color !important;
-  @include setBgColorAndHover($danger);
-  border-color: color.adjust($danger, $lightness: -15%);
-  outline: color.adjust($danger, $lightness: -15%) solid 2px;
+  color: $ta-btn-text !important;
+  @include setBgColorAndHover($ta-danger);
+  border-color: shade($ta-danger, -15%);
+  outline: shade($ta-danger, -15%) solid 2px;
 }
 
 .btn-secondary,
 .btn-secondary:focus {
-  color: $btn-text-color !important;
-  @include setBgColorAndHover($secondary);
-  border-color: color.adjust($secondary, $lightness: -15%);
-  outline: color.adjust($secondary, $lightness: -15%) solid 2px;
+  color: $ta-btn-text !important;
+  @include setBgColorAndHover($ta-secondary);
+  border-color: shade($ta-secondary, -15%);
+  outline: shade($ta-secondary, -15%) solid 2px;
 }
 
 .btn-warning,
 .btn-warning:focus {
-  color: $btn-text-color !important;
-  @include setBgColorAndHover($warning);
-  border-color: color.adjust($warning, $lightness: -15%);
-  outline: color.adjust($warning, $lightness: -15%) solid 2px;
+  color: $ta-btn-text !important;
+  @include setBgColorAndHover($ta-warning);
+  border-color: shade($ta-warning, -15%);
+  outline: shade($ta-warning, -15%) solid 2px;
 }
 
 .btn-primary,
 .btn-primary:focus {
-  color: $btn-text-color !important;
-  @include setBgColorAndHover($primary);
-  border-color: color.adjust($primary, $lightness: -15%);
-  outline: color.adjust($primary, $lightness: -15%) solid 2px;
+  color: $ta-btn-text !important;
+  @include setBgColorAndHover($ta-primary);
+  border-color: shade($ta-primary, -15%);
+  outline: shade($ta-primary, -15%) solid 2px;
 }
 
 button:disabled {
-  color: color.adjust($btn-text-color, $lightness: -10%);
-  background-color: $disabled;
-  // border-color: color.adjust($disabled, $lightness: -10%);
+  color: shade($ta-btn-text, -10%);
+  background-color: $ta-disabled;
+  // border-color: shade($ta-disabled, -10%);
   border-width: 0px;
-  outline: #050506 solid 2px;
+  outline: shade($ta-dark, -14%) solid 2px;
   &:hover {
-    background-color: $disabled;
+    background-color: $ta-disabled;
   }
 }
 
@@ -244,26 +244,26 @@ button:disabled {
 .text-box-container:hover {
   min-height: 25px;
   line-height: 13px;
-  color: $btn-text-color;
-  background-color: $disabled;
-  border-color: color.adjust($disabled, $lightness: 20%);
-  outline: color.adjust($disabled, $lightness: 15%) solid 2px;
+  color: $ta-btn-text;
+  background-color: $ta-disabled;
+  border-color: shade($ta-disabled, 20%);
+  outline: shade($ta-disabled, 15%) solid 2px;
 }
 
 .box-container {
-  color: $btn-text-color;
-  background-color: $disabled;
-  border-color: color.adjust($disabled, $lightness: 20%);
-  outline: color.adjust($disabled, $lightness: 15%) solid 3px;
+  color: $ta-btn-text;
+  background-color: $ta-disabled;
+  border-color: shade($ta-disabled, 20%);
+  outline: shade($ta-disabled, 15%) solid 3px;
   padding: 10px;
   border-radius: 0.375rem;
   overflow: auto;
 }
 
 .box-container-blank {
-  color: $btn-text-color;
-  // border-color: color.adjust($disabled, $lightness: 20%);
-  // outline: color.adjust($disabled, $lightness: 15%) solid 3px;
+  color: $ta-btn-text;
+  // border-color: shade($ta-disabled, 20%);
+  // outline: shade($ta-disabled, 15%) solid 3px;
   padding: 10px;
   border-radius: 0.375rem;
   overflow: auto;
@@ -271,7 +271,7 @@ button:disabled {
 
 .box-container::-webkit-scrollbar-track {
   padding: 0px 0;
-  background-color: $dark;
+  background-color: $ta-dark;
 }
 
 .box-container::-webkit-scrollbar {
@@ -279,7 +279,7 @@ button:disabled {
 }
 
 .box-container::-webkit-scrollbar-thumb {
-  background-color: $body-color;
+  background-color: $ta-body-color;
 }
 
 .freq-box {
@@ -337,7 +337,7 @@ button:disabled {
 }
 
 .radio-inactive {
-  background-color: $disabled !important;
+  background-color: $ta-disabled !important;
 }
 
 .radio-settings-overlay {
@@ -371,7 +371,7 @@ button:disabled {
   // width: 7px;
   // height: 7px;
   // border-radius: 50%;
-  // background-color: $primary;
+  // background-color: $ta-primary;
   z-index: 1000;
 }
 
@@ -396,7 +396,7 @@ button:disabled {
   // width: 7px;
   // height: 7px;
   // border-radius: 50%;
-  // background-color: $primary;
+  // background-color: $ta-primary;
   z-index: 1000;
 }
 
@@ -405,14 +405,14 @@ button:disabled {
   height: 90px;
   // margin: 5px;
   padding: 10px;
-  color: $btn-text-color;
-  background-color: color.adjust($disabled, $lightness: 5%);
+  color: $ta-btn-text;
+  background-color: shade($ta-disabled, 5%);
   border-radius: 0.375rem;
-  outline: color.adjust($disabled, $lightness: 25%) solid 2px;
+  outline: shade($ta-disabled, 25%) solid 2px;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: color.adjust($disabled, $lightness: 10%);
+    background-color: shade($ta-disabled, 10%);
   }
 
   // Main layout container
@@ -520,9 +520,9 @@ button:disabled {
 }
 
 select:disabled {
-  color: color.adjust($btn-text-color, $lightness: -40%);
-  background-color: #28283c !important;
-  border-color: color.adjust($disabled, $lightness: -10%);
+  color: shade($ta-btn-text, -40%);
+  background-color: shade($ta-dark, 4%) !important;
+  border-color: shade($ta-disabled, -10%);
 }
 
 @media only screen and (max-width: 450px) {
@@ -559,17 +559,17 @@ select:disabled {
 }
 
 .settingsModal {
-  border-color: color.adjust($disabled, $lightness: 20%);
-  outline: color.adjust($disabled, $lightness: 25%) solid 4px;
+  border-color: shade($ta-disabled, 20%);
+  outline: shade($ta-disabled, 25%) solid 4px;
   border-radius: var(--bs-modal-border-radius);
 }
 
 /* Settings modal tabs */
 .nav-tabs {
-  border-bottom: 2px solid color.adjust($dark, $lightness: 10%);
+  border-bottom: 2px solid shade($ta-dark, 10%);
 
   .nav-link {
-    color: color.adjust($body-color, $lightness: -20%);
+    color: shade($ta-body-color, -20%);
     border: none;
     border-bottom: 2px solid transparent;
     background: transparent;
@@ -580,14 +580,14 @@ select:disabled {
       border-color 0.15s ease;
 
     &:hover {
-      color: $body-color;
-      border-bottom-color: color.adjust($dark, $lightness: 25%);
+      color: $ta-body-color;
+      border-bottom-color: shade($ta-dark, 25%);
     }
 
     &.active {
-      color: $body-color;
+      color: $ta-body-color;
       background: transparent;
-      border-bottom: 2px solid $info;
+      border-bottom: 2px solid $ta-info;
     }
   }
 }
@@ -602,7 +602,7 @@ select:disabled {
 }
 
 .modal-body::-webkit-scrollbar-thumb {
-  background-color: $body-color;
+  background-color: $ta-body-color;
 }
 
 .btn-no-interact {
@@ -651,7 +651,7 @@ select:disabled {
 }
 
 .color-warning {
-  color: $warning !important;
+  color: $ta-warning !important;
 }
 
 .mini {
@@ -712,15 +712,12 @@ select:disabled {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(50, 50, 58); /* Color of the scrollbar thumb */
+  background: shade($ta-dark, 5%); /* Color of the scrollbar thumb */
   border-radius: 2px; /* Rounded corners of the scrollbar thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: color.adjust(
-    rgb(50, 50, 58),
-    $lightness: 10%
-  ); /* Color of the scrollbar thumb on hover */
+  background: shade($ta-dark, 15%); /* Color of the scrollbar thumb on hover */
 }
 
 .radio-text {

@@ -143,5 +143,6 @@
     "stacktrace": "cpp",
     "syncstream": "cpp"
   },
-  "C_Cpp.default.compileCommands": "backend/build/compile_commands.json"
+  "C_Cpp.default.compileCommands": "backend/build/compile_commands.json",
+  "discord.enabled": false
 }

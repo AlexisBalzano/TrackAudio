@@ -1,6 +1,8 @@
-$primary-color: #2c6be0;
-$secondary-color: #173f88;
-$accent-color: #72e5df;
+@use '../../../style/variables.scss' as GlobalVars;
+
+$primary-color: GlobalVars.$ta-primary;
+$secondary-color: GlobalVars.shade(GlobalVars.$ta-primary, -15%);
+$accent-color: GlobalVars.$ta-info;
 
 #loader {
   display: flex;

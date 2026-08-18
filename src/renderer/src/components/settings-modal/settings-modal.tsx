@@ -3,7 +3,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { AudioApi, AudioDevice } from 'trackaudio-afv';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { AlwaysOnTopMode, Configuration, RadioEffects } from '../../../../shared/config.type';
+import {
+  AlwaysOnTopMode,
+  Configuration,
+  RadioEffects,
+  StyleTheme
+} from '../../../../shared/config.type';
 import useRadioState from '../../store/radioStore';
 import useUtilStore from '../../store/utilStore';
 import AudioApis from './audio-apis';
@@ -62,7 +67,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
     setTransparentMiniMode,
     setPendingRestart,
     setRadioToMaxVolumeOnTX,
-    setUpdateChannel
+    setUpdateChannel,
+    styleTheme,
+    setStyleTheme
   ] = useUtilStore((state) => [
     state.vu,
     state.peakVu,
@@ -80,7 +87,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
     state.setTransparentMiniMode,
     state.setPendingRestart,
     state.setRadioToMaxVolumeOnTX,
-    state.setUpdateChannel
+    state.setUpdateChannel,
+    state.styleTheme,
+    state.setStyleTheme
   ]);
   const [isMicTesting, setIsMicTesting] = useState(false);
 
@@ -104,6 +113,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
         setLoopbackGain(config.loopbackGain);
         setMicrophoneGain(config.microphoneGain);
         setUpdateChannel(config.updateChannel);
+        setStyleTheme(config.styleTheme);
       })
       .catch((err: unknown) => {
         console.error(err);
@@ -338,6 +348,15 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
     void window.api.SetRadioEffects(radioEffects);
     setRadioEffects(radioEffects);
     setConfig({ ...config, radioEffects: radioEffects });
+    setChangesSaved(SaveStatus.Saved);
+  };
+
+  const handleStyleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setChangesSaved(SaveStatus.Saving);
+    const styleTheme = e.target.value as StyleTheme;
+    window.api.setStyleTheme(styleTheme);
+    setStyleTheme(styleTheme);
+    setConfig({ ...config, styleTheme: styleTheme });
     setChangesSaved(SaveStatus.Saved);
   };
 
@@ -652,7 +671,17 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
 
                   <Tab.Pane eventKey="general">
                     <div className="form-group">
-                      <label className="mt-1">Keep window on top</label>
+                      <label className="mt-1">Style</label>
+                      <select
+                        className="form-control mt-1"
+                        onChange={handleStyleThemeChange}
+                        value={styleTheme}
+                      >
+                        <option value="default">Default</option>
+                        <option value="dark">Dark</option>
+                      </select>
+
+                      <label className="mt-2">Keep window on top</label>
                       <select
                         className="form-control mt-1"
                         onChange={handleAlwaysOnTop}

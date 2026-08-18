@@ -12,7 +12,7 @@ $transition-speed: 0.1s;
   z-index: 1000;
   // border-bottom: 1px solid GlobalVars.$dark-border;
   font: 600 15px sans-serif;
-  color: GlobalVars.$body-color;
+  color: GlobalVars.$ta-body-color;
   -webkit-app-region: drag;
   padding: 0;
   display: flex;
@@ -24,7 +24,7 @@ $transition-speed: 0.1s;
   }
 
   &.unfocused {
-    background-color: GlobalVars.$disabled;
+    background-color: GlobalVars.$ta-disabled;
   }
 }
 
@@ -78,9 +78,9 @@ $transition-speed: 0.1s;
   height: 100%;
   margin: 0px;
   font-size: GlobalVars.$main-font-size;
-  background-color: color.adjust(GlobalVars.$dark, $lightness: 10%);
-  color: GlobalVars.$body-color;
-  border: 2px solid color.adjust(GlobalVars.$dark, $lightness: -5%);
+  background-color: GlobalVars.shade(GlobalVars.$ta-dark, 10%);
+  color: GlobalVars.$ta-body-color;
+  border: 2px solid GlobalVars.shade(GlobalVars.$ta-dark, -5%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,22 +90,22 @@ $transition-speed: 0.1s;
   user-select: none;
 
   &.hover-enabled:hover {
-    background-color: color.adjust(GlobalVars.$dark, $lightness: 15%);
+    background-color: GlobalVars.shade(GlobalVars.$ta-dark, 15%);
   }
 
   &.dark {
-    background-color: color.adjust(GlobalVars.$dark, $lightness: -5%);
+    background-color: GlobalVars.shade(GlobalVars.$ta-dark, -5%);
     &:hover {
-      background-color: color.adjust(GlobalVars.$dark, $lightness: 0%);
+      background-color: GlobalVars.shade(GlobalVars.$ta-dark, 0%);
     }
   }
 
   &.info {
-    background-color: color.adjust(GlobalVars.$info, $lightness: -10%) !important;
+    background-color: GlobalVars.shade(GlobalVars.$ta-info, -10%) !important;
   }
 
   &.active {
-    background-color: color.adjust(GlobalVars.$success, $lightness: -10%) !important;
+    background-color: GlobalVars.shade(GlobalVars.$ta-success, -10%) !important;
   }
 
   &:last-child {
@@ -124,7 +124,7 @@ $transition-speed: 0.1s;
 }
 
 .unfocused-color {
-  color: color.adjust(GlobalVars.$body-color, $lightness: -10%) !important;
+  color: GlobalVars.shade(GlobalVars.$ta-body-color, -10%) !important;
 }
 
 .draggable {
@@ -140,7 +140,7 @@ $transition-speed: 0.1s;
   right: 0;
   z-index: 10;
   -webkit-app-region: no-drag;
-  background-color: GlobalVars.$dark;
+  background-color: GlobalVars.$ta-dark;
   // border-bottom: 1px solid GlobalVars.$dark-border;
 
   &.focused {
@@ -148,13 +148,13 @@ $transition-speed: 0.1s;
   }
 
   &.unfocused {
-    background-color: GlobalVars.$disabled;
+    background-color: GlobalVars.$ta-disabled;
   }
   .element {
     line-height: 33px;
     height: 35px;
     width: 16px;
-    stroke: #575c63;
+    stroke: GlobalVars.shade(GlobalVars.$ta-body-color, -50%);
     padding: 0 5px;
     box-sizing: content-box;
     fill: transparent;
@@ -162,7 +162,7 @@ $transition-speed: 0.1s;
     transition:
       background-color $transition-speed linear,
       color $transition-speed linear;
-    stroke: #a4a9b0;
+    stroke: GlobalVars.shade(GlobalVars.$ta-body-color, -20%);
 
     &:hover {
       background-color: rgba(196, 196, 196, 0.4);
@@ -176,15 +176,15 @@ $transition-speed: 0.1s;
 
     &.disable-resize {
       pointer-events: none; /* Disables all interactions */
-      stroke: #575c63;
+      stroke: GlobalVars.shade(GlobalVars.$ta-body-color, -50%);
     }
 
     // &.caption-close {
-    //   stroke: #a4a9b0;
+    //   stroke: GlobalVars.shade(GlobalVars.$ta-body-color, -20%);
     // }
 
     &.caption-close:hover {
-      background-color: #e81123;
+      background-color: GlobalVars.$ta-danger;
 
       > svg {
         stroke: #fff;
@@ -193,7 +193,7 @@ $transition-speed: 0.1s;
     }
 
     &.caption-close:active {
-      background-color: rgba(232, 17, 35, 0.6);
+      background-color: GlobalVars.alpha(GlobalVars.$ta-danger, 0.6);
     }
 
     > svg {

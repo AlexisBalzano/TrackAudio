@@ -1,6 +1,6 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 
-import { AlwaysOnTopMode, RadioEffects } from '../shared/config.type';
+import { AlwaysOnTopMode, RadioEffects, StyleTheme } from '../shared/config.type';
 import { ProgressInfo, UpdateDownloadedEvent, UpdateInfo } from 'electron-updater';
 
 export const api = {
@@ -34,6 +34,9 @@ export const api = {
   },
   setShowExpandedRx: (state: boolean) => {
     ipcRenderer.send('set-show-expanded-rx', state);
+  },
+  setStyleTheme: (theme: StyleTheme) => {
+    ipcRenderer.send('set-style-theme', theme);
   },
   setTransparentMiniMode: (state: boolean) => {
     ipcRenderer.send('set-transparent-mini-mode', state);

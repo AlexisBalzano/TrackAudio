@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { StyleTheme } from '../../../shared/config.type';
 
 interface UtilStore {
   vu: number;
@@ -14,6 +15,7 @@ interface UtilStore {
   isEditMode: boolean;
   pendingRestart: boolean;
   transparentMiniMode: boolean;
+  styleTheme: StyleTheme;
   radioToMaxVolumeOnTX: boolean;
   updateChannel: string;
   time: Date;
@@ -28,6 +30,7 @@ interface UtilStore {
   setWindowMaximised: (maximised: boolean) => void;
   setShowExpandedRxInfo: (showExpandedRxInfo: boolean) => void;
   setTransparentMiniMode: (transparentMiniMode: boolean) => void;
+  setStyleTheme: (styleTheme: StyleTheme) => void;
   setPendingRestart: (pendingRestart: boolean) => void;
   setRadioToMaxVolumeOnTX: (maxVolume: boolean) => void;
   setTime: (time: Date) => void;
@@ -47,6 +50,7 @@ const useUtilStore = create<UtilStore>((set) => ({
   showExpandedRxInfo: false,
   isEditMode: false,
   transparentMiniMode: false,
+  styleTheme: 'default',
   pendingRestart: false,
   radioToMaxVolumeOnTX: false,
   time: new Date(),
@@ -83,6 +87,9 @@ const useUtilStore = create<UtilStore>((set) => ({
   },
   setTransparentMiniMode: (transparentMiniMode: boolean): void => {
     set({ transparentMiniMode });
+  },
+  setStyleTheme: (styleTheme: StyleTheme): void => {
+    set({ styleTheme });
   },
   setPendingRestart: (pendingRestart: boolean): void => {
     set({ pendingRestart });

@@ -12,9 +12,15 @@ import { useEffect, useState } from 'react';
 import IPCInterface from './interfaces/IPCInterface';
 import Updater from './components/updater/Updater';
 import { UpdateInfo } from 'electron-updater';
+import useUtilStore from './store/utilStore';
+import { Configuration } from '../../shared/config.type';
 
 function App() {
   const [updateAvailable, setUpdateAvailable] = useState<UpdateInfo | null>(null);
+  const [styleTheme, setStyleTheme] = useUtilStore((state) => [
+    state.styleTheme,
+    state.setStyleTheme
+  ]);
 
   useEffect(() => {
     IPCInterface.init();
@@ -24,6 +30,23 @@ function App() {
       IPCInterface.destroy();
     };
   }, []);
+
+  // The settings modal is only mounted while it is open, so the saved theme is
+  // loaded here instead to make sure it is applied on startup.
+  useEffect(() => {
+    window.api
+      .getConfig()
+      .then((config: Configuration) => {
+        setStyleTheme(config.styleTheme);
+      })
+      .catch((err: unknown) => {
+        window.api.log.error(`Error loading style theme: ${String(err)}`);
+      });
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = styleTheme;
+  }, [styleTheme]);
 
   return (
     <div className="absolute">

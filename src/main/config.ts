@@ -1,7 +1,7 @@
 import { dialog } from 'electron';
 import Store from 'electron-store';
 
-import { AlwaysOnTopMode, Configuration, RadioEffects } from '../shared/config.type';
+import { AlwaysOnTopMode, Configuration, RadioEffects, StyleTheme } from '../shared/config.type';
 
 // Used to check for older settings that need upgrading. This should get
 // increased any time the Configuration object has a breaking change.
@@ -24,6 +24,7 @@ export const defaultConfiguration = {
   alwaysOnTop: 'never' as AlwaysOnTopMode,
   showExpandedRx: false,
   transparentMiniMode: false,
+  styleTheme: 'default' as StyleTheme,
   radioToMaxVolumeOnTx: false,
   pttReleaseSoundEnabled: false,
   loopbackEnabled: false,

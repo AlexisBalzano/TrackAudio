@@ -1,0 +1,57 @@
+/*
+ * Theme definitions.
+ *
+ * Each theme is a set of CSS custom properties. They are read by the $ta-*
+ * aliases in variables.scss, so changing the data-theme attribute on <html>
+ * restyles the app at runtime without a rebuild.
+ *
+ * :root holds the default theme. Its values must stay in sync with the
+ * palette literals at the top of variables.scss, which feed Bootstrap's
+ * compile-time colour maths and therefore cannot be custom properties.
+ *
+ * To add a theme: add a [data-theme='<id>'] block defining every property,
+ * then add the id to StyleTheme in src/shared/config.type.ts and an <option>
+ * in the settings modal.
+ */
+
+:root,
+:root[data-theme='default'] {
+  --ta-primary: #436384;
+  --ta-secondary: #6c757d;
+  --ta-success: #28a745;
+  --ta-info: #17a2b8;
+  --ta-warning: #c7861d;
+  --ta-danger: #dc3545;
+  --ta-light: #f8f9fa;
+  --ta-dark: #212431;
+  --ta-bg: #2c2f45;
+  --ta-body-color: #dddddd;
+  --ta-alias: #5eb1bf;
+  --ta-btn-text: #ffffff;
+}
+
+/*
+ * Neutral black and grey. The chrome goes greyscale, but the status colours
+ * stay saturated so rx/tx/xc states remain distinguishable at a glance.
+ * --ta-dark is kept darker than --ta-bg, matching the default theme, where
+ * panels and the navbar sit darker than the body behind them.
+ */
+:root[data-theme='dark'] {
+  --ta-primary: #3f3f3f;
+  --ta-secondary: #6c757d;
+  --ta-success: #2e9e4b;
+  /*
+   * --ta-info is the accent: tab underlines, rx outlines and the info toolbar
+   * button. Yellow against the greyscale chrome. --ta-warning is pushed toward
+   * orange so the two stay distinguishable now that the accent is yellow.
+   */
+  --ta-info: #f0c419;
+  --ta-warning: #d9822b;
+  --ta-danger: #d3455b;
+  --ta-light: #f8f9fa;
+  --ta-dark: #171717;
+  --ta-bg: #232323;
+  --ta-body-color: #e0e0e0;
+  --ta-alias: #f0c419;
+  --ta-btn-text: #ffffff;
+}

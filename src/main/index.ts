@@ -18,7 +18,7 @@ import updater from 'electron-updater';
 import log from 'electron-log/main';
 import { ENV } from './env';
 import configManager from './config';
-import { AlwaysOnTopMode, RadioEffects } from '../shared/config.type';
+import { AlwaysOnTopMode, RadioEffects, StyleTheme } from '../shared/config.type';
 import { MainVolumeChange } from '../shared/MainVolumeChange';
 
 type WindowMode = 'mini' | 'maxi';
@@ -494,6 +494,10 @@ ipcMain.on('set-always-on-top', (_, alwaysOnTop: AlwaysOnTopMode) => {
 
 ipcMain.on('set-show-expanded-rx', (_, showExpandedRx: boolean) => {
   configManager.updateConfig({ showExpandedRx });
+});
+
+ipcMain.on('set-style-theme', (_, styleTheme: StyleTheme) => {
+  configManager.updateConfig({ styleTheme });
 });
 
 ipcMain.on('set-transparent-mini-mode', (_, transparentMiniMode: boolean) => {
