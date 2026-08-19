@@ -566,13 +566,20 @@ void StopMicTest(const Napi::CallbackInfo& /*info*/)
         return;
     }
 
+    const bool wasRunning = MainThreadShared::vuMeterThread != nullptr;
+
     MainThreadShared::runVuMeterCallback = false;
     if (MainThreadShared::vuMeterThread && MainThreadShared::vuMeterThread->joinable()) {
         MainThreadShared::vuMeterThread->join();
     }
     MainThreadShared::vuMeterThread.reset(nullptr);
 
-    mClient->StopAudio();
+    // Only tear down audio the mic test itself started. The settings modal calls
+    // this whenever it closes, and while connected the audio device belongs to
+    // the voice session — stopping it there would silence a live session.
+    if (wasRunning && !mClient->IsVoiceConnected()) {
+        mClient->StopAudio();
+    }
 }
 
 void StartAudio(const Napi::CallbackInfo& /*info*/)

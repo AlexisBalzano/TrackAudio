@@ -10,6 +10,7 @@ import {
   StyleTheme
 } from '../../../../shared/config.type';
 import useRadioState from '../../store/radioStore';
+import useSessionStore from '../../store/sessionStore';
 import useUtilStore from '../../store/utilStore';
 import AudioApis from './audio-apis';
 import AudioInput from './audio-input';
@@ -47,6 +48,11 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
   const [pttIsOn] = useRadioState((state) => [state.pttIsOn]);
 
   const [platform] = useUtilStore((state) => [state.platform]);
+
+  // Audio devices are only read when the audio device is created, so changing
+  // them mid-session would not take effect until reconnecting. Everything else
+  // in here applies live and stays editable while connected.
+  const [isConnected] = useSessionStore((state) => [state.isConnected]);
 
   const isWindows = platform === 'win32';
 
@@ -452,6 +458,11 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
                 <Tab.Content>
                   <Tab.Pane eventKey="audio">
                     <div className="form-group">
+                      {isConnected && (
+                        <div className="mt-1 text-warning">
+                          Audio devices can only be changed while disconnected.
+                        </div>
+                      )}
                       <label className="mt-1">Audio API</label>
                       <AudioApis
                         apis={audioApis}
@@ -459,6 +470,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
                         selectApi={(apiId: number) => {
                           changeAudioApi(apiId);
                         }}
+                        disabled={isConnected}
                       />
                       <label className={`mt-2 ${!isHeadsetDeviceValid ? 'text-danger' : ''}`}>
                         Headset device
@@ -470,6 +482,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
                         setDevice={(device): void => {
                           setHeadsetDevice(device.id);
                         }}
+                        disabled={isConnected}
                       />
                       <label className={`mt-2 ${!isSpeakerDeviceValid ? 'text-danger' : ''}`}>
                         Speaker device
@@ -481,6 +494,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
                         setDevice={(device): void => {
                           setSpeakerDevice(device.id);
                         }}
+                        disabled={isConnected}
                       />
                       <label className={`mt-2 ${!isInputDeviceValid ? 'text-danger' : ''}`}>
                         Input device
@@ -492,6 +506,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
                         setDevice={(device): void => {
                           setInputDevice(device.id);
                         }}
+                        disabled={isConnected}
                       />
 
                       <button
@@ -502,6 +517,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
                         )}
                         onClick={handleMicTest}
                         disabled={
+                          isConnected ||
                           !(hasPtt1BeenSetDuringSetup || hasPtt2BeenSetDuringSetup) ||
                           config.headsetOutputDeviceId === '' ||
                           config.speakerOutputDeviceId === '' ||

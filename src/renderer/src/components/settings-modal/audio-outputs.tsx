@@ -5,9 +5,10 @@ export interface AudioOutputsProps {
   devices: AudioDevice[];
   selectedDeviceId: string;
   setDevice: (device: AudioDevice) => void;
+  disabled?: boolean;
 }
 
-const AudioOutputs: React.FC<AudioOutputsProps> = ({ devices, selectedDeviceId, setDevice }) => {
+const AudioOutputs: React.FC<AudioOutputsProps> = ({ devices, selectedDeviceId, setDevice, disabled }) => {
   const handleDeviceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedDevice = devices.find((device) => device.id === e.target.value);
     if (selectedDevice) {
@@ -18,6 +19,7 @@ const AudioOutputs: React.FC<AudioOutputsProps> = ({ devices, selectedDeviceId, 
   return (
     <select
       className="form-control mt-1"
+      disabled={disabled}
       onChange={handleDeviceChange}
       value={devices.some((device) => device.id === selectedDeviceId) ? selectedDeviceId : ''}
     >

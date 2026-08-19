@@ -5,9 +5,10 @@ export interface AudioApisProps {
   apis: AudioApi[];
   selectedApiId: number;
   selectApi: (apiId: number) => void;
+  disabled?: boolean;
 }
 
-const AudioApis: React.FC<AudioApisProps> = ({ apis, selectedApiId, selectApi }) => {
+const AudioApis: React.FC<AudioApisProps> = ({ apis, selectedApiId, selectApi, disabled }) => {
   const [apiValue, setApiValue] = useState(-1);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const AudioApis: React.FC<AudioApisProps> = ({ apis, selectedApiId, selectApi })
   return (
     <select
       className="form-control mt-1"
+      disabled={disabled}
       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
         selectApi(parseInt(e.target.value));
       }}

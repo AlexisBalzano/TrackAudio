@@ -108,7 +108,7 @@ const Navbar: React.FC<NavbarProps> = ({ updateAvailable }: NavbarProps) => {
               <div className="d-flex h-100 align-items-center">
                 <button
                   className={clsx(buttonClass, 'btn btn-primary hide-settings-flex ')}
-                  disabled={isConnected || isConnecting}
+                  disabled={isConnecting}
                   onClick={() => {
                     if (showAddStationModal || updateAvailable) return;
                     setShowSettingsModal(true);
