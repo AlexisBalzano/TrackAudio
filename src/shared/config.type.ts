@@ -1,6 +1,11 @@
 export type AlwaysOnTopMode = 'never' | 'always' | 'inMiniMode';
 export type RadioEffects = 'on' | 'input' | 'output' | 'off';
 export type StyleTheme = 'default' | 'dark';
+// Levelling applied to incoming station audio. 'agc' is the historical
+// behaviour and adds no latency; 'normalize' matches transmissions properly but
+// delays received audio by the configured lookahead.
+export type IncomingLevelling = 'off' | 'agc' | 'normalize';
+export type NormalizerLatency = 'low' | 'normal' | 'accurate';
 
 export interface Configuration {
   version?: number;
@@ -25,6 +30,10 @@ export interface Configuration {
   transparentMiniMode: boolean;
 
   styleTheme: StyleTheme;
+
+  incomingLevelling: IncomingLevelling;
+  normalizerTargetLufs: number;
+  normalizerLatency: NormalizerLatency;
 
   radioToMaxVolumeOnTx: boolean;
 

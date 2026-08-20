@@ -1,7 +1,14 @@
 import { dialog } from 'electron';
 import Store from 'electron-store';
 
-import { AlwaysOnTopMode, Configuration, RadioEffects, StyleTheme } from '../shared/config.type';
+import {
+  AlwaysOnTopMode,
+  Configuration,
+  IncomingLevelling,
+  NormalizerLatency,
+  RadioEffects,
+  StyleTheme
+} from '../shared/config.type';
 
 // Used to check for older settings that need upgrading. This should get
 // increased any time the Configuration object has a breaking change.
@@ -25,6 +32,9 @@ export const defaultConfiguration = {
   showExpandedRx: false,
   transparentMiniMode: false,
   styleTheme: 'default' as StyleTheme,
+  incomingLevelling: 'agc' as IncomingLevelling,
+  normalizerTargetLufs: -20,
+  normalizerLatency: 'normal' as NormalizerLatency,
   radioToMaxVolumeOnTx: false,
   pttReleaseSoundEnabled: false,
   loopbackEnabled: false,

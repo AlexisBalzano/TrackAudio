@@ -18,7 +18,13 @@ import updater from 'electron-updater';
 import log from 'electron-log/main';
 import { ENV } from './env';
 import configManager from './config';
-import { AlwaysOnTopMode, RadioEffects, StyleTheme } from '../shared/config.type';
+import {
+  AlwaysOnTopMode,
+  IncomingLevelling,
+  NormalizerLatency,
+  RadioEffects,
+  StyleTheme
+} from '../shared/config.type';
 import { MainVolumeChange } from '../shared/MainVolumeChange';
 
 type WindowMode = 'mini' | 'maxi';
@@ -76,6 +82,30 @@ const isInMiniMode = () => {
   return mainWindow.getContentSize()[0] <= miniModeWidthBreakpoint;
 };
 
+// afv-native takes the mode as an int and the lookahead in milliseconds; the
+// config stores them as names so the stored value stays readable and the preset
+// timings can be retuned without migrating anyone's settings.
+const levellingModeToNative: Record<IncomingLevelling, number> = {
+  off: 0,
+  agc: 1,
+  normalize: 2
+};
+
+const normalizerLatencyToMs: Record<NormalizerLatency, number> = {
+  low: 75,
+  normal: 150,
+  accurate: 300
+};
+
+const applyLevellingSettings = () => {
+  const { incomingLevelling, normalizerTargetLufs, normalizerLatency } = configManager.config;
+  TrackAudioAfv.SetNormalizerTargetLufs(normalizerTargetLufs);
+  TrackAudioAfv.SetNormalizerLatencyMs(normalizerLatencyToMs[normalizerLatency]);
+  // Mode last: the other two rebuild every open stream's normalizer, so setting
+  // it afterwards means the streams are already carrying the new configuration.
+  TrackAudioAfv.SetLevellingMode(levellingModeToNative[incomingLevelling]);
+};
+
 const applyLoopbackSettings = () => {
   const { loopbackEnabled, loopbackTarget, loopbackGain, hardwareType } = configManager.config;
   TrackAudioAfv.SetLoopback(loopbackEnabled, loopbackTarget, loopbackGain / 100, hardwareType);
@@ -92,6 +122,7 @@ const setAudioSettings = () => {
   TrackAudioAfv.SetHardwareType(configManager.config.hardwareType);
   TrackAudioAfv.SetMicrophoneVolume(configManager.config.microphoneGain / 100);
   applyLoopbackSettings();
+  applyLevellingSettings();
 };
 
 /**
@@ -518,6 +549,21 @@ ipcMain.on('set-ptt-release-sound-enabled', (_, pttReleaseSoundEnabled: boolean)
 ipcMain.on('set-loopback-enabled', (_, loopbackEnabled: boolean) => {
   configManager.updateConfig({ loopbackEnabled });
   applyLoopbackSettings();
+});
+
+ipcMain.on('set-incoming-levelling', (_, incomingLevelling: IncomingLevelling) => {
+  configManager.updateConfig({ incomingLevelling });
+  applyLevellingSettings();
+});
+
+ipcMain.on('set-normalizer-target-lufs', (_, normalizerTargetLufs: number) => {
+  configManager.updateConfig({ normalizerTargetLufs });
+  applyLevellingSettings();
+});
+
+ipcMain.on('set-normalizer-latency', (_, normalizerLatency: NormalizerLatency) => {
+  configManager.updateConfig({ normalizerLatency });
+  applyLevellingSettings();
 });
 
 ipcMain.on('set-loopback-target', (_, loopbackTarget: number) => {

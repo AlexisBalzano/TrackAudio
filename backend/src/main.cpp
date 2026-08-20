@@ -445,6 +445,36 @@ void SetMicrophoneVolume(const Napi::CallbackInfo& info)
     mClient->SetMicrophoneVolume(volume);
 }
 
+// Levelling applied to incoming station audio: 0 off, 1 automatic gain,
+// 2 loudness normalization. Safe to change while connected; afv-native
+// re-applies it to the streams already open.
+void SetLevellingMode(const Napi::CallbackInfo& info)
+{
+    if (!mClient) {
+        return;
+    }
+    int mode = info[0].As<Napi::Number>().Int32Value();
+    mClient->SetLevellingMode(mode);
+}
+
+void SetNormalizerTargetLufs(const Napi::CallbackInfo& info)
+{
+    if (!mClient) {
+        return;
+    }
+    double targetLufs = info[0].As<Napi::Number>().DoubleValue();
+    mClient->SetNormalizerTargetLufs(targetLufs);
+}
+
+void SetNormalizerLatencyMs(const Napi::CallbackInfo& info)
+{
+    if (!mClient) {
+        return;
+    }
+    double latencyMs = info[0].As<Napi::Number>().DoubleValue();
+    mClient->SetNormalizerLatencyMs(latencyMs);
+}
+
 void SetPttReleaseSoundEnabled(const Napi::CallbackInfo& info)
 {
     MainThreadShared::pttReleaseSoundEnabled = info[0].As<Napi::Boolean>().Value();
@@ -1162,6 +1192,13 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
 
     exports.Set(
         Napi::String::New(env, "SetHardwareType"), Napi::Function::New(env, SetHardwareType));
+
+    exports.Set(Napi::String::New(env, "SetLevellingMode"),
+        Napi::Function::New(env, SetLevellingMode));
+    exports.Set(Napi::String::New(env, "SetNormalizerTargetLufs"),
+        Napi::Function::New(env, SetNormalizerTargetLufs));
+    exports.Set(Napi::String::New(env, "SetNormalizerLatencyMs"),
+        Napi::Function::New(env, SetNormalizerLatencyMs));
 
     exports.Set(Napi::String::New(env, "Bootstrap"), Napi::Function::New(env, Bootstrap));
 

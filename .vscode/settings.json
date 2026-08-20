@@ -144,5 +144,5 @@
     "syncstream": "cpp"
   },
   "C_Cpp.default.compileCommands": "backend/build/compile_commands.json",
-  "discord.enabled": false
+  "discord.enabled": true
 }

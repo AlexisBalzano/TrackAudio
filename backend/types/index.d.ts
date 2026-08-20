@@ -117,6 +117,9 @@ declare namespace TrackAudioAfv {
   export function StopAdHocSounds(): void;
   export function SetPttReleaseSoundEnabled(enabled: boolean): void;
   export function SetLoopback(enabled: boolean, target: number, gain: number, hardware: number): void;
+  export function SetLevellingMode(mode: number): void;
+  export function SetNormalizerTargetLufs(targetLufs: number): void;
+  export function SetNormalizerLatencyMs(latencyMs: number): void;
 
   export function RegisterCallback(
     func: (arg: string, arg2: string, arg3: string, arg4: string) => void

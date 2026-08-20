@@ -6,6 +6,8 @@ import { useDebouncedCallback } from 'use-debounce';
 import {
   AlwaysOnTopMode,
   Configuration,
+  IncomingLevelling,
+  NormalizerLatency,
   RadioEffects,
   StyleTheme
 } from '../../../../shared/config.type';
@@ -42,6 +44,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
   const [loopbackTarget, setLoopbackTarget] = useState(0);
   const [loopbackGain, setLoopbackGain] = useState(50);
   const [microphoneGain, setMicrophoneGain] = useState(100);
+  const [incomingLevelling, setIncomingLevelling] = useState<IncomingLevelling>('agc');
+  const [normalizerTargetLufs, setNormalizerTargetLufs] = useState(-20);
+  const [normalizerLatency, setNormalizerLatency] = useState<NormalizerLatency>('normal');
   const [cid, setCid] = useState('');
   const [password, setPassword] = useState('');
 
@@ -118,6 +123,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
         setLoopbackTarget(config.loopbackTarget);
         setLoopbackGain(config.loopbackGain);
         setMicrophoneGain(config.microphoneGain);
+        setIncomingLevelling(config.incomingLevelling);
+        setNormalizerTargetLufs(config.normalizerTargetLufs);
+        setNormalizerLatency(config.normalizerLatency);
         setUpdateChannel(config.updateChannel);
         setStyleTheme(config.styleTheme);
       })
@@ -357,6 +365,33 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
     setChangesSaved(SaveStatus.Saved);
   };
 
+  const handleIncomingLevellingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setChangesSaved(SaveStatus.Saving);
+    const mode = e.target.value as IncomingLevelling;
+    setIncomingLevelling(mode);
+    window.api.setIncomingLevelling(mode);
+    setConfig({ ...config, incomingLevelling: mode });
+    setChangesSaved(SaveStatus.Saved);
+  };
+
+  const handleNormalizerLatencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setChangesSaved(SaveStatus.Saving);
+    const latency = e.target.value as NormalizerLatency;
+    setNormalizerLatency(latency);
+    window.api.setNormalizerLatency(latency);
+    setConfig({ ...config, normalizerLatency: latency });
+    setChangesSaved(SaveStatus.Saved);
+  };
+
+  const handleNormalizerTargetLufsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChangesSaved(SaveStatus.Saving);
+    const targetLufs = parseInt(e.target.value);
+    setNormalizerTargetLufs(targetLufs);
+    window.api.setNormalizerTargetLufs(targetLufs);
+    setConfig({ ...config, normalizerTargetLufs: targetLufs });
+    setChangesSaved(SaveStatus.Saved);
+  };
+
   const handleStyleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setChangesSaved(SaveStatus.Saving);
     const styleTheme = e.target.value as StyleTheme;
@@ -582,6 +617,45 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ closeModal }) => {
                             max="100"
                             value={loopbackGain}
                             onChange={handleLoopbackGainChange}
+                          />
+                        </>
+                      )}
+
+                      <label className="mt-3">Incoming levelling</label>
+                      <select
+                        className="form-control mt-1"
+                        value={incomingLevelling}
+                        onChange={handleIncomingLevellingChange}
+                      >
+                        <option value="off">Off</option>
+                        <option value="agc">Automatic gain (no added delay)</option>
+                        <option value="normalize">Loudness normalization</option>
+                      </select>
+                      {incomingLevelling === 'normalize' && (
+                        <>
+                          <label className="mt-2">Normalization latency</label>
+                          <select
+                            className="form-control mt-1"
+                            value={normalizerLatency}
+                            onChange={handleNormalizerLatencyChange}
+                          >
+                            <option value="low">Low (~75 ms)</option>
+                            <option value="normal">Normal (~150 ms)</option>
+                            <option value="accurate">Accurate (~300 ms)</option>
+                          </select>
+                          <div className="d-flex justify-content-between align-items-center mt-2">
+                            <label>Target loudness</label>
+                            <span style={{ minWidth: '70px', textAlign: 'right' }}>
+                              {normalizerTargetLufs} LUFS
+                            </span>
+                          </div>
+                          <input
+                            type="range"
+                            className="form-range mt-1"
+                            min="-31"
+                            max="-9"
+                            value={normalizerTargetLufs}
+                            onChange={handleNormalizerTargetLufsChange}
                           />
                         </>
                       )}

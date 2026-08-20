@@ -1,6 +1,12 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 
-import { AlwaysOnTopMode, RadioEffects, StyleTheme } from '../shared/config.type';
+import {
+  AlwaysOnTopMode,
+  IncomingLevelling,
+  NormalizerLatency,
+  RadioEffects,
+  StyleTheme
+} from '../shared/config.type';
 import { ProgressInfo, UpdateDownloadedEvent, UpdateInfo } from 'electron-updater';
 
 export const api = {
@@ -37,6 +43,15 @@ export const api = {
   },
   setStyleTheme: (theme: StyleTheme) => {
     ipcRenderer.send('set-style-theme', theme);
+  },
+  setIncomingLevelling: (mode: IncomingLevelling) => {
+    ipcRenderer.send('set-incoming-levelling', mode);
+  },
+  setNormalizerTargetLufs: (targetLufs: number) => {
+    ipcRenderer.send('set-normalizer-target-lufs', targetLufs);
+  },
+  setNormalizerLatency: (latency: NormalizerLatency) => {
+    ipcRenderer.send('set-normalizer-latency', latency);
   },
   setTransparentMiniMode: (state: boolean) => {
     ipcRenderer.send('set-transparent-mini-mode', state);
