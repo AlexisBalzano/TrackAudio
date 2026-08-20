@@ -3,8 +3,8 @@
 	url = https://github.com/microsoft/vcpkg.git
 [submodule "backend/extern/afv-native"]
 	path = backend/extern/afv-native
-	url = https://github.com/pierr3/afv-native.git
-  branch = develop-trackaudio
+	url = https://github.com/AlexisBalzano/afv-native.git
+  branch = feature/loudness-normalization
 [submodule "backend/extern/libuiohook"]
 	path = backend/extern/libuiohook
 	url = https://github.com/GeorgeBarlow/libuiohook
